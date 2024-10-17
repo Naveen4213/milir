@@ -37,7 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".contentlayer/generated"
-  ],
+, "src/app/resetpassword/[resetToken]/[customerId]"  ],
   "exclude": [
     "node_modules",
     ".next"

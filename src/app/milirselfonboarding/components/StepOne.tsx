@@ -10,7 +10,7 @@ const StepOne = ({ formData, updateFormData }) => {
  }
   return (
     <div>     
-        <div className={'flex flex-1 flex-col space-y-2'}>
+        <div className={'flex flex-1 flex-col space-y-2 min-h-96'}>
             <h2>What's your roll in your company?</h2>
             <TextField>
                 <TextField.Label>

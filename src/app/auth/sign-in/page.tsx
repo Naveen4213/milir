@@ -16,6 +16,12 @@ export const metadata = {
 function SignInPage() {
   return (
     <>
+      <div className="flex justify-center items-center">
+        <img 
+        src="/assets/images/milir/milirlogo1.png"
+        alt="milir single"
+        className="mx-auto h-5 w-auto"/>
+      </div>
       <div>
         <Heading type={5}>
           <Trans i18nKey={'auth:signInHeading'} />

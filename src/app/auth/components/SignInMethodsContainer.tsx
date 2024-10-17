@@ -64,7 +64,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
 <form className={'w-full xl:max-w-lg'} onSubmit={handleSubmit}>
 <div className={'flex-col space-y-4'}>
 <TextField>
-          <TextField.Label htmlFor="email" className="mt-4">
+          <TextField.Label htmlFor="email">
             Email
           <TextField.Input
             required
@@ -77,7 +77,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
           </TextField.Label>
         </TextField>
         <TextField>
-          <TextField.Label htmlFor="password" className="mt-4">
+          <TextField.Label htmlFor="password">
           Password
           <TextField.Input
           required

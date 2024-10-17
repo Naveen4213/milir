@@ -15,12 +15,14 @@ module.exports = {
     extend: {
       fontFamily: {
         heading: [
-          'var(--font-family-heading)',
+          // 'var(--font-family-heading)',
+          'Nunito',
           'Inter',
           'SF Pro Text',
           'system-ui',
         ],
-        sans: ['var(--font-family-sans)'],
+        // sans: ['var(--font-family-sans)','Nunito'],
+        sans: ['Nunito', 'Arial', 'sans-serif'],
         monospace: [`SF Mono`, `ui-monospace`, `Monaco`, 'Monospace'],
       },
       colors: {

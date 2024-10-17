@@ -5,6 +5,13 @@ const AppSidebar= () => {
   return (
     <Sidebar>
       <SidebarContent className={'py-4'}>
+        <div className="flex items-start mb-4 px-4">
+          <img 
+            src="/assets/images/milir/milirlogo1.png"
+            alt="milir single"
+            className="h-5 w-auto"
+          />
+        </div>
         <SidebarItem
           path={'#dashboard'}
           Icon={() => <Square3Stack3DIcon className={'w-4'} />}

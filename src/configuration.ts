@@ -56,6 +56,7 @@ const configuration = {
     milirOnboard: '/milironboarding/requestonboard',
     requestOnboard: '/auth/requestonboard',
     selfRequestOnboard: '/milirselfonboarding/requestonboard',
+    resetPassword : "/resetpassword/:resetToken/:customerId",
     onboarding: `/onboarding`,
     appPrefix: '/dashboard',
     appHome: '/dashboard',

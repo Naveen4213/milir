@@ -27,11 +27,9 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3033/api/v1
 function SignUpMethodsContainer() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstname:'',
-    lastname:'',
+    username:'',
     email:'',
-    password:'',
-    confirmPassword:''
+    password:''
   });
   //const [error, setError] = useState<string | null>(null);
   const handleChange = (e) => {
@@ -68,12 +66,12 @@ function SignUpMethodsContainer() {
     // }
     // setError(null);
 
-    if (formData.password !== formData.confirmPassword) {
-      console.error("Passwords do not match:", formData);
-      return false;
-    }
+    // if (formData.password !== formData.confirmPassword) {
+    //   console.error("Password do not match:", formData);
+    //   return false;
+    // }
 
-    const { confirmPassword, ...payload } = formData;
+    const { ...payload } = formData;
     try {
       const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
@@ -118,21 +116,21 @@ function SignUpMethodsContainer() {
       <form className={'w-full xl:max-w-lg'} onSubmit={handleClick}>
       <div className={'flex-col space-y-4'}>
         <TextField>
-          <TextField.Label htmlFor="firstname">
-              First Name
+          <TextField.Label htmlFor="username">
+              User Name
             <TextField.Input
               required
-              id="firstname"
+              id="username"
               type="text"
-              name="firstname"
+              name="username"
               onChange={handleChange}
               // placeholder="Enter your first name"
             />
             </TextField.Label>
           </TextField>
-
+{/* 
         <TextField>
-          <TextField.Label htmlFor="lastname" className="mt-4">
+          <TextField.Label htmlFor="lastname">
             Last Name
           <TextField.Input
             required
@@ -143,10 +141,10 @@ function SignUpMethodsContainer() {
             // placeholder="Enter your last name"
           />
           </TextField.Label>
-        </TextField>
+        </TextField> */}
 
         <TextField>
-          <TextField.Label htmlFor="email" className="mt-4">
+          <TextField.Label htmlFor="email">
             Email
           <TextField.Input
             required
@@ -159,7 +157,7 @@ function SignUpMethodsContainer() {
           </TextField.Label>
         </TextField>
         <TextField>
-          <TextField.Label htmlFor="password" className="mt-4">
+          <TextField.Label htmlFor="password">
           Password
           <TextField.Input
           required
@@ -171,8 +169,8 @@ function SignUpMethodsContainer() {
           />
           </TextField.Label>
         </TextField>
-        <TextField>
-          <TextField.Label htmlFor="confirmPassword" className="mt-4">
+        {/* <TextField>
+          <TextField.Label htmlFor="confirmPassword">
             Confirm Password
           <TextField.Input
             required
@@ -183,9 +181,10 @@ function SignUpMethodsContainer() {
             // placeholder="Enter your confirm password"
           />
           </TextField.Label>
-        </TextField>
+        </TextField> */}
       <div>
-      <Button className='flex w-full flex-1 items-center justify-center'>
+      {/* <Button className='flex w-full flex-1 items-center justify-center'> */}
+      <Button block type="submit">
         <span>SIGN UP</span>
       </Button>
       </div>

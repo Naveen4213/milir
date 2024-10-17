@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 
 import useRequestResetPassword from '~/core/hooks/use-request-reset-password';
 import AuthErrorMessage from '~/app/auth/components/AuthErrorMessage';
@@ -13,26 +13,57 @@ import Trans from '~/core/ui/Trans';
 import configuration from '~/configuration';
 import { useTranslation } from 'react-i18next';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3033/api/v1/auth';
+
 function PasswordResetRequestContainer() {
   const { t } = useTranslation('auth');
-  const resetPasswordMutation = useRequestResetPassword();
-  const error = resetPasswordMutation.error;
-  const success = resetPasswordMutation.data;
+  // const resetPasswordMutation = useRequestResetPassword();
+  // const error = resetPasswordMutation.error;
+  // const success = resetPasswordMutation.data;
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
+      alert("Hai")
       event.preventDefault();
 
       const data = new FormData(event.currentTarget);
       const email = data.get('email') as string;
-      const redirectTo = getReturnUrl();
+      // const redirectTo = getReturnUrl();
 
-      await resetPasswordMutation.trigger({
-        email,
-        redirectTo,
-      });
+      try {
+        const response = await fetch(`${API_URL}/forgot-password`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.code) {
+          setSuccess(true);
+          setError(null);
+        } else {
+          setError(result.message || 'An error occurred');
+          setSuccess(false);
+        }
+      } catch (err) {
+        setError('An error occurred during the request');
+      } finally {
+        setLoading(false);
+      }
     },
-    [resetPasswordMutation],
+    [],
+    //   await resetPasswordMutation.trigger({
+    //     email,
+    //     redirectTo,
+    //   });
+    // },
+    // [resetPasswordMutation],
   );
 
   return (
@@ -43,15 +74,17 @@ function PasswordResetRequestContainer() {
         </Alert>
       </If>
 
-      <If condition={!resetPasswordMutation.data}>
+      {/* <If condition={!resetPasswordMutation.data}> */}
+      <If condition={!success}>
         <>
-          <form onSubmit={(e) => void onSubmit(e)} className={'w-full'}>
+          {/* <form onSubmit={(e) => void onSubmit(e)} className={'w-full'}> */}
+          <form onSubmit={onSubmit} className={'w-full'}>
             <div className={'flex-col space-y-4'}>
-              <div>
+              {/* <div>
                 <p className={'text-sm text-gray-700 dark:text-gray-400'}>
                   <Trans i18nKey={'auth:passwordResetSubheading'} />
                 </p>
-              </div>
+              </div> */}
 
               <div>
                 <TextField.Label>
@@ -66,15 +99,24 @@ function PasswordResetRequestContainer() {
                 </TextField.Label>
               </div>
 
-              <AuthErrorMessage error={error} />
+              {error && (
+              <Alert type="error">
+                {error}
+              </Alert>
+            )}
 
-              <Button
+              {/* <AuthErrorMessage error={error} /> */}
+
+              {/* <Button
                 loading={resetPasswordMutation.isMutating}
                 type="submit"
                 block
               >
                 <Trans i18nKey={'auth:passwordResetLabel'} />
-              </Button>
+              </Button> */}
+              <Button loading={loading} type="submit" block>
+              <Trans i18nKey="auth:passwordResetLabel" />
+            </Button>
             </div>
           </form>
         </>
@@ -90,10 +132,10 @@ export default PasswordResetRequestContainer;
  * Return the URL where the user will be redirected to after resetting
  * their password
  */
-function getReturnUrl() {
-  const host = window.location.origin;
-  const callback = configuration.paths.authCallback;
-  const callbackUrl = `${host}${callback}`;
+// function getReturnUrl() {
+//   const host = window.location.origin;
+//   const callback = configuration.paths.authCallback;
+//   const callbackUrl = `${host}${callback}`;
 
-  return callbackUrl + '?next=/password-reset';
-}
+//   return callbackUrl + '?next=/password-reset';
+// }
